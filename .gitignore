@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+
+# uv's virtual environment
+.venv/
+
+# secrets and local settings: never committed
+.env
+.env.*
