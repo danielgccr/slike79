@@ -2,7 +2,7 @@
 
 A DEC VT100 in your browser, logged into a simulated UNIX/32V, running **S**: the
 statistical language John Chambers, Rick Becker and colleagues built at Bell Laboratories
-from 1976, as described in the 1981 manual *S: A Language and System for Data Analysis*.
+from 1976, [as described in the 1981 manual *S: A Language and System for Data Analysis*](https://drive.google.com/drive/folders/14ijVPw1DihydXFqTzj-wgl3C5LYEJdKX).
 
 Bell Labs S was never released, so this one is rebuilt in Python from that manual. The
 UNIX around it is simulated too, with `sh`, `ed`, pipes and `troff`, so you can analyse data
