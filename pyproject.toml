@@ -1,0 +1,9 @@
+[project]
+name = "slike79"
+version = "0.1.0"
+description = "Compute S like 1979: Bell Labs S on a simulated UNIX/32V behind a VT100"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.142.2",
+    "uvicorn[standard]>=0.54.0",
+]

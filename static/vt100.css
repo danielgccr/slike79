@@ -1,0 +1,285 @@
+:root {
+  --desk: #3a2b20;
+  --desk-dark: #24190f;
+  --putty: #d6ccb8;
+  --putty-shade: #b8ab92;
+  --bezel: #3d3833;
+  --glass: #0d1110;
+  --phosphor: #e3ebf0;
+  --tek-green: #7dff9a;
+  --paper: #eceae2;
+  --ink: #1f1e1b;
+}
+
+* { box-sizing: border-box; }
+
+html { color-scheme: dark; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 30%, var(--desk) 0%, var(--desk-dark) 75%);
+  color: var(--putty);
+  font-family: Tinos, 'Times New Roman', serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 16px 64px;
+}
+
+/* ---- the terminal ---- */
+
+.vt100 {
+  background: linear-gradient(180deg, var(--putty) 0%, var(--putty) 70%, var(--putty-shade) 100%);
+  border-radius: 22px 22px 14px 14px;
+  padding: 30px 34px 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), inset 0 2px 0 rgba(255, 255, 255, 0.5),
+              inset 0 -6px 12px rgba(0, 0, 0, 0.18);
+}
+
+.bezel {
+  background: var(--bezel);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: inset 0 0 0 2px #2a2622, inset 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.glass {
+  position: relative;
+  background: var(--glass);
+  border-radius: 26px / 34px;
+  padding: 22px 26px;
+  overflow: hidden;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9);
+}
+
+/* scanlines and the curve of the tube */
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 62%, rgba(0, 0, 0, 0.45) 100%),
+    repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 3px);
+}
+
+/* VT323 has an ff ligature: xterm.js measures a glyph by setting a run of it, so "ffff..." came out
+   half as wide and every f got extra letter-spacing, a gap no character-cell terminal could show.
+   No ligatures, no kerning: one character, one cell. */
+#screen .xterm, #screen .xterm * {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "clig" 0, "calt" 0;
+  font-kerning: none;
+}
+
+#screen .xterm-rows {
+  text-shadow: 0 0 1px rgba(227, 235, 240, 0.9), 0 0 6px rgba(190, 215, 235, 0.45);
+}
+
+#screen .xterm-viewport { scrollbar-width: none; }
+
+.plate {
+  margin: 16px 6px 0 auto;
+  width: fit-content;
+  padding: 4px 14px 5px;
+  background: var(--bezel);
+  color: var(--putty);
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* the one motion: power-on, a bright line opening into the picture */
+@media (prefers-reduced-motion: no-preference) {
+  .glass > #screen { opacity: 0; }
+  body.on .glass > #screen { animation: power-on 0.7s ease-out forwards; }
+  @keyframes power-on {
+    0%   { opacity: 1; transform: scale(1, 0.004); filter: brightness(4); }
+    45%  { opacity: 1; transform: scale(1, 0.004); filter: brightness(4); }
+    100% { opacity: 1; transform: scale(1, 1); filter: brightness(1); }
+  }
+}
+
+/* ---- reference card, set like a page of the troff manual ---- */
+
+.open-card {
+  font: inherit;
+  font-size: 17px;
+  color: var(--putty);
+  background: none;
+  border: 1px solid var(--putty-shade);
+  border-radius: 4px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+.open-card:hover { background: rgba(214, 204, 184, 0.1); }
+.open-card[aria-pressed="true"] {            /* its panel is showing */
+  background: var(--putty);
+  color: var(--desk-dark);
+  border-color: var(--putty);
+}
+
+:focus-visible { outline: 2px solid var(--phosphor); outline-offset: 3px; }
+
+.manual {
+  width: min(100%, 960px);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 40px 48px 48px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  columns: 2 380px;
+  column-gap: 48px;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.manual section { break-inside: avoid-column; margin-bottom: 24px; }
+.manual h2 { font-size: 20px; font-style: italic; font-weight: 400; margin: 0 0 8px; }
+.manual dl { display: grid; grid-template-columns: fit-content(45%) minmax(0, 1fr); gap: 3px 16px; margin: 0; }
+.manual dt { font-weight: 700; overflow-wrap: anywhere; }
+.manual dd { margin: 0; }
+
+/* worked examples: one column, transcripts as typewritten listings */
+.manual.examples { columns: auto; max-width: 880px; }
+.examples header p, .examples section > p { max-width: 68ch; }
+.examples h2 { font-size: 26px; font-style: normal; margin: 0 0 8px; }
+.examples h3 { font-size: 20px; font-style: italic; font-weight: 400; margin: 32px 0 6px; }
+.examples code { font-family: "Courier New", Courier, monospace; }
+.examples .session {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13.5px;
+  line-height: 1.3;
+  background: #e2dfd5;
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin: 10px 0;
+}
+.type-it {
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  padding: 3px 12px;
+  cursor: pointer;
+}
+.type-it:hover { background: rgba(31, 30, 27, 0.08); }
+.tek-shot { margin: 12px 0; max-width: 560px; }
+.tek-shot img {
+  width: 100%;
+  display: block;
+  background: radial-gradient(ellipse at center, #0b2414 0%, #04110a 80%);
+  border: 10px solid var(--bezel);
+  border-radius: 8px;
+}
+.proof-shot { margin: 12px 0; max-width: 560px; }
+.proof-shot img { width: 100%; display: block; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); }
+.proof-shot figcaption, .tek-shot figcaption { font-size: 14px; font-style: italic; margin-top: 4px; }
+
+/* ---- the desk: VT100, and the Tektronix 4014 beside it once S draws ---- */
+
+.desk {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.tek4014 {
+  flex: 1 1 420px;
+  max-width: 640px;
+  background: linear-gradient(180deg, #c9c4b6 0%, #b3ad9e 100%);
+  border-radius: 14px;
+  padding: 22px 22px 14px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), inset 0 2px 0 rgba(255, 255, 255, 0.45);
+}
+.tek4014[hidden] { display: none; }
+
+.tek4014 .tube {
+  aspect-ratio: 1024 / 780;
+  background: radial-gradient(ellipse at center, #0b2414 0%, #04110a 80%);
+  border: 12px solid var(--bezel);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.tek4014 img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 0 2px var(--tek-green)) drop-shadow(0 0 6px rgba(125, 255, 154, 0.35));
+}
+.tek4014 .plate { margin-top: 12px; }
+
+/* a page erase on a storage tube: the whole screen flashes green, then the new picture */
+@media (prefers-reduced-motion: no-preference) {
+  .tek4014 .tube.flash { animation: tek-erase 0.45s ease-out; }
+  @keyframes tek-erase {
+    0%   { background: #7dff9a; }
+    100% { background: #04110a; }
+  }
+}
+
+/* ---- keys switch and card button ---- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px 32px;
+}
+
+.keys {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 17px;
+}
+.keys legend { float: left; margin-right: 4px; font-style: italic; }
+.keys label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.keys input { accent-color: var(--putty); margin: 0; }
+.keys p { flex-basis: 100%; margin: 0; font-size: 15px; color: var(--putty-shade); }
+
+/* ---- troff page proof ---- */
+
+.proof {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(10, 8, 6, 0.75);
+  cursor: pointer;
+}
+.proof[hidden] { display: none; }
+.proof .sheet {
+  width: min(100%, 720px);
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  background: #fbfaf5;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+}
+.proof img { width: 100%; display: block; }
+.proof p { margin: 0; color: var(--putty); font-size: 15px; }
+
+@media (max-width: 640px) {
+  main { padding-top: 16px; }
+  .manual { padding: 24px 20px; }
+}

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compute S like 1979</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@6.0.0/css/xterm.css">
+<link rel="stylesheet" href="/static/vt100.css">
+<script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@6.0.0/lib/xterm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js"></script>
+</head>
+<body>
+<main>
+  <div class="desk">
+    <div class="vt100" id="case">
+      <div class="bezel">
+        <div class="glass"><div id="screen" aria-label="Terminal"></div></div>
+      </div>
+      <h1 class="plate">Compute S like 1979</h1>
+    </div>
+
+    <section class="tek4014" id="tek" hidden aria-label="Tektronix 4014">
+      <div class="tube"><img alt="S plot on the Tektronix 4014"></div>
+      <p class="plate">Tektronix 4014</p>
+    </section>
+  </div>
+
+  <div class="controls">
+    <fieldset class="keys">
+      <legend>Keys</legend>
+      <label><input type="radio" name="keys" value="modern" checked> Modern</label>
+      <label><input type="radio" name="keys" value="1979"> 1979</label>
+      <p id="keys-help" aria-live="polite"></p>
+    </fieldset>
+    <button type="button" class="open-card" data-toggles="card" aria-pressed="false" aria-controls="card"
+            hx-get="/card" hx-target="#card" hx-swap="innerHTML" hx-trigger="click once">
+      Reference card
+    </button>
+    <button type="button" class="open-card" data-toggles="examples" aria-pressed="false" aria-controls="examples"
+            hx-get="/examples" hx-target="#examples" hx-swap="innerHTML" hx-trigger="click once">
+      Worked examples
+    </button>
+  </div>
+  <article id="card" class="manual" hidden></article>
+  <article id="examples" class="manual examples" hidden></article>
+</main>
+
+<div id="proof" class="proof" hidden role="dialog" aria-label="troff page proof">
+  <div class="sheet"><img alt="Page typeset by troff"></div>
+  <p>Phototypesetter proof from troff. Click or press Esc to put it away.</p>
+</div>
+
+<script src="/static/term.js"></script>
+</body>
+</html>
