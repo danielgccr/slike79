@@ -8,6 +8,11 @@ Bell Labs S was never released, so this one is rebuilt in Python from that manua
 UNIX around it is simulated too, with `sh`, `ed`, pipes and `troff`, so you can analyse data
 and write up the results the way it was done then.
 
+<p>
+  <img src="docs/login.png" width="49%" alt="The VT100 on a walnut desk: after Dialing..., the UNIX/32V banner from Bell Telephone Laboratories, Murray Hill, and a login prompt">
+  <img src="docs/welcome.png" width="49%" alt="After logging in: the login message suggests S commands to try, points to the example files in the home directory and to man unix1982, and the shell prompt waits">
+</p>
+
 ```
 $ S
 > x <- c(1,-1,2,-2,.5); sort(x)
