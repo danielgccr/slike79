@@ -138,8 +138,10 @@ Two parts are deliberate what-ifs and say so: `spp`, and the backfitting macro, 
 reached S only in 1991.
 
 `spp` also has a working, present-day form: [knitroff](https://github.com/danielgccr/knitroff),
-an R package that runs R chunks between `.SS` and `.SE` in an `-ms` document, with knitr,
-and typesets the result with GNU groff. Unlike 1981, it can put the figures on the page.
+an R package on [CRAN](https://cran.r-project.org/package=knitroff)
+(`install.packages("knitroff")`) that runs R chunks between `.SS` and `.SE` in an `-ms`
+document, with knitr, and typesets the result with GNU groff. Unlike 1981, it can put the
+figures on the page.
 
 Some features are period-faithful on purpose, even when that's less convenient:
 - `tr` knows only octal escapes, so `'\n'` is the letter n and newline is `'\012'`;
